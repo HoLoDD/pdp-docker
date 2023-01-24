@@ -1,0 +1,37 @@
+version: '3'
+services:
+  postgres:
+    container_name: ar-postgres
+    image: postgres
+    restart: 'no'
+    environment:
+      POSTGRES_DB: arma-reborn
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - 5432:5432
+    networks:
+      - app-network
+  backend:
+    container_name: ar-backend
+    build:
+      context: ./
+      target: production
+    image: ar-backend
+    depends_on:
+      - postgres
+    ports:
+      - 4000:4000
+    environment:
+      ENVIRONMENT: local
+      DB_PORT: 5432
+      DB_HOST: postgres
+      DB_USER: postgres
+      DB_PASSWORD: postgres
+      DB_NAME: postgres
+      TG_API_HOST: url
+    networks:
+      - app-network
+networks:
+  app-network:
+    driver: bridge

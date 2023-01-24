@@ -1,0 +1,29 @@
+FROM node:14
+WORKDIR /usr/src/app
+COPY package.json .
+RUN npm install
+COPY . .
+ARG PORT=4000
+ARG ENVIRONMENT=local
+
+# DB credentials
+ARG DB_DIALECT=postgres
+ARG DB_HOST=localhost
+ARG DB_PORT=5432
+ARG DB_USER=postgres
+ARG DB_PASSWORD=postgres
+ARG DB_NAME=arma-reborn
+
+ARG TG_API_HOST=url
+
+ENV PORT=${PORT}
+ENV ENVIRONMENT=${ENVIRONMENT}
+ENV DB_DIALECT=${DB_DIALECT}
+ENV DB_HOST=${DB_HOST}
+ENV DB_PORT=${DB_PORT}
+ENV DB_USER=${DB_USER}
+ENV DB_PASSWORD=${DB_PASSWORD}
+ENV DB_NAME=${DB_NAME}
+ENV TG_API_HOST=${TG_API_HOST}
+EXPOSE ${PORT}
+CMD [ "node", "./dist/src/main.js" ]
