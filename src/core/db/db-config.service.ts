@@ -9,19 +9,21 @@ export class TypeOrmConfigService implements TypeOrmOptionsFactory {
   constructor(private readonly config: AppConfigService) {}
 
   createTypeOrmOptions(): TypeOrmModuleOptions {
+    console.log(this.config);
+
     return {
-      type: this.config.DATABASE_DIALECT,
-      host: this.config.DATABASE_HOST,
-      port: this.config.DATABASE_PORT,
-      username: this.config.DATABASE_USER,
-      password: this.config.DATABASE_PASSWORD,
-      database: this.config.DATABASE_NAME,
+      type: this.config.DB_DIALECT,
+      host: this.config.DB_HOST,
+      port: this.config.DB_PORT,
+      username: this.config.DB_USER,
+      password: this.config.DB_PASSWORD,
+      database: this.config.DB_NAME,
       uuidExtension: 'pgcrypto',
       extra: {
         max: 10,
         connectionTimeoutMillis: 100000,
       },
-      entities: [`${__dirname}/../../**/*.entity{.ts,.js}`],
+      entities: [`${__dirname}/../**/*.entity{.ts,.js}`],
       autoLoadEntities: true,
 
       namingStrategy: new CustomNamingStrategy(),

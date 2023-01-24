@@ -1,4 +1,4 @@
-import { ValidationError, ValidationPipe } from '@nestjs/common';
+import { ValidationPipe } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { NestFactory } from '@nestjs/core';
 import * as Express from 'express';
@@ -25,25 +25,13 @@ async function bootstrap() {
   app.use(Express.urlencoded({ limit: '50mb', extended: true }));
   app.enableCors();
 
-  // app.useGlobalPipes(
-  //   new ValidationPipe({
-  //     whitelist: true,
-  //     transform: true,
-  //     forbidNonWhitelisted: true,
-  //     exceptionFactory: (errors: ValidationError[]) => {
-  //       logger.log(`errors: ${JSON.stringify(errors)}`);
-
-  //       return new WrongRequestException(
-  //         'Validation Error!',
-  //         appConfigService
-  //           ? errors[0]?.constraints ||
-  //             errors[0]?.children[0]?.constraints ||
-  //             errors
-  //           : undefined,
-  //       );
-  //     },
-  //   }),
-  // );
+  app.useGlobalPipes(
+    new ValidationPipe({
+      whitelist: true,
+      transform: true,
+      forbidNonWhitelisted: true,
+    }),
+  );
   // app.useGlobalFilters(new UnauthorizedExceptionFilter());
 
   const appConfigService = app.select(AppConfigModule).get(AppConfigService);

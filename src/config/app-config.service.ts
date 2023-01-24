@@ -15,12 +15,14 @@ export class AppConfigService {
   private readonly VERSION: string;
   private readonly PORT: number;
 
-  public readonly DATABASE_DIALECT: 'postgres';
-  public readonly DATABASE_HOST: string;
-  public readonly DATABASE_PASSWORD: string;
-  public readonly DATABASE_PORT: number;
-  public readonly DATABASE_USER: string;
-  public readonly DATABASE_NAME: string;
+  public readonly DB_DIALECT: 'postgres';
+  public readonly DB_HOST: string;
+  public readonly DB_PASSWORD: string;
+  public readonly DB_PORT: number;
+  public readonly DB_USER: string;
+  public readonly DB_NAME: string;
+
+  public readonly TG_API_HOST: string;
 
   readonly defaultBatchSize = 10;
   readonly defaultSkipSize = 0;
@@ -38,12 +40,14 @@ export class AppConfigService {
     this.IS_PRODUCTION = this.ENVIRONMENT === EStage.PROD;
     this.IS_LOCAL = this.ENVIRONMENT === EStage.LOCAL;
 
-    this.DATABASE_DIALECT = configService.getOrThrow('DATABASE_DIALECT');
-    this.DATABASE_HOST = configService.getOrThrow('DATABASE_HOST');
-    this.DATABASE_PASSWORD = configService.getOrThrow('DATABASE_PASSWORD');
-    this.DATABASE_PORT = configService.getOrThrow('DATABASE_PORT');
-    this.DATABASE_USER = configService.getOrThrow('DATABASE_USER');
-    this.DATABASE_NAME = configService.getOrThrow('DATABASE_NAME');
+    this.DB_DIALECT = configService.getOrThrow('DB_DIALECT');
+    this.DB_HOST = configService.getOrThrow('DB_HOST');
+    this.DB_PASSWORD = configService.getOrThrow('DB_PASSWORD');
+    this.DB_PORT = configService.getOrThrow('DB_PORT');
+    this.DB_USER = configService.getOrThrow('DB_USER');
+    this.DB_NAME = configService.getOrThrow('DB_NAME');
+
+    this.TG_API_HOST = configService.getOrThrow('TG_API_HOST');
   }
 
   public get appName() {
